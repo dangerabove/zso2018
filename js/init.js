@@ -6,6 +6,9 @@ var initState = {
 		this.game.load.image('L3', 'as/img/L3.png');
 		this.game.load.image('player1', 'as/img/player.png');
 		this.game.load.image('powder', 'as/img/powder.png');
+		this.game.load.image('food', 'as/img/food.png');
+		this.game.load.image('lifeC', 'as/img/lifeC.png');
+		this.game.load.image('blank', 'as/img/blank.png');
 
 		this.game.load.tilemap('lvl1','as/maps/level1.json', null, Phaser.Tilemap.TILED_JSON);
 		this.game.load.tilemap('lvl2','as/maps/level2.json', null, Phaser.Tilemap.TILED_JSON);
