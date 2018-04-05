@@ -1,3 +1,21 @@
+EnemySf = function(game){
+	Phaser.Sprite.call
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 var levelState = {
 	create: function(){
 
@@ -8,6 +26,7 @@ var levelState = {
   	blockLayer = map.createLayer('BlockLayer');
 		backLayer = map.createLayer('BackLayer');
 		obsLayer = map.createLayer('ObsLayer');
+		//pathLayer = map.createLayer('PathLayer');
   	backLayer.resizeWorld();
   	game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -28,11 +47,6 @@ var levelState = {
 		slash4 = game.add.sprite(-64, 0, 'slash4s');
 		slash4.anchor.x=0.5;
 		slash4.anchor.y=0.5;
-		/*slashes = game.add.group();
-		slashes.add(slash1);
-		slashes.add(slash2);
-		slashes.add(slash3);
-		slashes.add(slash4);*/
 
 		[slash1,slash2,slash3,slash4].enableBody = true;
 		game.physics.arcade.enable([slash1,slash2,slash3,slash4]);
@@ -49,12 +63,48 @@ var levelState = {
 		enemySG.enableBody = true;
 		map.createFromObjects('ObjectLayer', 8, 'enemyS',0, true, false, enemySG);
 
+		enemyIG = game.add.group();
+		enemyIG.enableBody = true;
+		enemyIG.physicsBodyType = Phaser.Physics.ARCADE;
+		map.createFromObjects('ObjectLayer', 10, 'enemyI',0, true, false, enemyIG);
+		enemyIG.setAll('body.velocity.x', Ispeed);
+		enemyIG.forEachAlive(function(enemyIG){enemyIG.body.setSize(44,44,-6, -6)})
+
+		pathLG = game.add.group();
+		pathLG.enableBody = true;
+		map.createFromObjects('PObjectLayer', 17, 'blank',0, true, false, pathLG);
+
+		pathRG = game.add.group();
+		pathRG.enableBody = true;
+		map.createFromObjects('PObjectLayer', 6, 'blank',0, true, false, pathRG);
+
+		pathTG = game.add.group();
+		pathTG.enableBody = true;
+		map.createFromObjects('PObjectLayer', 16, 'blank',0, true, false, pathTG);
+
+		pathBG = game.add.group();
+		pathBG.enableBody = true;
+		map.createFromObjects('PObjectLayer', 7, 'blank',0, true, false, pathBG);
+
+		//game.physics.arcade.enable(enemyIG);
+		//enemyIG.forEachAlive(function(){game.physics.arcade.enable(enemyIG)}, this);
+
+
+				//bounce L=17,R=6,T=7,D=16,
+
+		/*map.setTileIndexCallback(17, this.hitLeft, this);
+		map.setTileIndexCallback(6, this.hitRight, this);
+		map.setTileIndexCallback(7, this.hitTop, this);
+		map.setTileIndexCallback(16, this.hitBottom, this);*/
+
 		bulletS = game.add.group();
     bulletS.enableBody = true;
     bulletS.physicsBodyType = Phaser.Physics.ARCADE;
     bulletS.createMultiple(30, 'bullet');
     bulletS.setAll('anchor.x', 0.5);
     bulletS.setAll('anchor.y', 0.5);
+		bulletS.setAll('outOfBoundsKill', true);
+    bulletS.setAll('checkWorldBounds', true);
 
 		/*enemyLG = game.add.group();
 		enemyLG.enableBody = true;
@@ -100,11 +150,20 @@ var levelState = {
 		game.physics.arcade.overlap(player, powderG, this.collectPowder, null, this);
 		game.physics.arcade.overlap(player, foodG, this.collectFood, null, this);
 		game.physics.arcade.overlap(player, bulletS, this.hurtS, null, this);
-		game.physics.arcade.overlap(slash1, enemySG, this.attackS1, null, this);
+		game.physics.arcade.overlap(enemySG, slash1, this.attackS1, null, this);
 		game.physics.arcade.overlap(enemySG, slash2, this.attackS2, null, this);
 		game.physics.arcade.overlap(enemySG, slash3, this.attackS3, null, this);
 		game.physics.arcade.overlap(enemySG, slash4, this.attackS4, null, this);
-		game.physics.arcade.overlap(slash1, powderG, this.collectPowder, null, this);
+		game.physics.arcade.overlap(enemyIG, slash1, this.attackI1, null, this);
+		game.physics.arcade.overlap(enemyIG, slash2, this.attackI2, null, this);
+		game.physics.arcade.overlap(enemyIG, slash3, this.attackI3, null, this);
+		game.physics.arcade.overlap(enemyIG, slash4, this.attackI4, null, this);
+		//game.physics.arcade.overlap(slash1, powderG, this.collectPowder, null, this);
+		game.physics.arcade.overlap(enemyIG, pathLG, this.hitLeft, null, this);
+		game.physics.arcade.overlap(enemyIG, pathRG, this.hitRight, null, this);
+		game.physics.arcade.overlap(enemyIG, pathTG, this.hitTop, null, this);
+		game.physics.arcade.overlap(enemyIG, pathBG, this.hitBottom, null, this);
+		game.physics.arcade.overlap(player, enemyIG, this.Intercept, null, this);
 	  player.body.velocity.x = 0;
 	  player.body.velocity.y = 0;
 
@@ -149,20 +208,23 @@ var levelState = {
 			};
 	  };
 
-		if (this.game.time.now > this.nextFireS){
+		/*if (this.game.time.now > this.nextFireS){
 		 	enemySG.forEachAlive(function(enemyS){
 			 	this.nextFireS = this.game.time.now + this.fireRateS;
-			 	bulletS = bulletS.getFirstExists(false);
-				bulletS.reset(this.enemySG.x, this.enemySG.y);
-	      this.game.physics.arcade.moveToObject(bulletS, this.player, 100);
-		 })}
+			 	var bullet = bulletS.getFirstExists(false);
+				bullet.reset(this.enemySG.x, this.enemySG.y);
+	      this.game.physics.arcade.moveToObject(bullet, this.player, 100);
+		 }) }*/
+
+
+
 	},
 	collectPowder: function(player,powder){
 		powder.kill();
   	ammo += 3;
 	},
 	collectFood: function(player,food){
-		if(life < 3){
+		if(life < maxlife){
 		food.kill();
 		life += 1;
 		};
@@ -172,7 +234,6 @@ var levelState = {
   	life -= 2;
 	},
 	attackS1: function(slash1, enemySG){
-		//enemySG.HP -= 1;
 		enemySG.kill();
 		console.log('hit');
 	},
@@ -188,11 +249,34 @@ var levelState = {
 		enemySG.kill();
 		console.log('hit');
 	},
+	attackI1: function(slash1, enemyIG){
+		//enemySG.HP -= 1;
+		enemyIG.kill();
+		console.log('hit');
+	},
+	attackI2: function(slash2, enemyIG){
+		enemyIG.kill();
+		console.log('hit');
+	},
+	attackI3: function(slash3, enemyIG){
+		enemyIG.kill();
+		console.log('hit');
+	},
+	attackI4: function(slash4, enemyIG){
+		enemyIG.kill();
+		console.log('hit');
+	},
+	hitLeft: function(enemyIG, blank){enemyIG.body.velocity.x=Ispeed;enemyIG.body.velocity.y=0},
+	hitRight: function(enemyIG, blank){enemyIG.body.velocity.x=-Ispeed;enemyIG.body.velocity.y=0},
+	hitTop: function(enemyIG, blank){enemyIG.body.velocity.y=Ispeed;enemyIG.body.velocity.x=0;},
+	hitBottom: function(enemyIG, blank){enemyIG.body.velocity.y=-Ispeed;enemyIG.body.velocity.x=0;},
+	Intercept: function(player, enemyIG){if(this.game.time.now > nextInvul){nextInvul = this.game.time.now + invRate; life -=1}},
 	render: function(){
 		game.debug.body(player);
 		game.debug.body(slash1);
 		game.debug.body(slash2);
 		game.debug.body(slash3);
 		game.debug.body(slash4);
+		enemyIG.forEachAlive(function(enemyIG){game.debug.body(enemyIG)})
 	}
 }

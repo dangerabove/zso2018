@@ -6,12 +6,21 @@ var player;
 var speed = 90;
 var fireRate = 400;
 var nextFire = 0;
+var invRate = 150;
+var nextInvul = 0;
 var powderG;
 var foodG;
-var life = 3;
+var life = 8;
+var maxlife = 8;
 var ammo = 3;
 var rope = 3;
-var start
+var start;
+
+var enemySG;
+var Ispeed = 110;
+var bulletS;
+//var fireRateS = 100;
+//var nextFireS = 0;
 
 var lifeC;
 var ammoC;
