@@ -4,14 +4,18 @@ var initState = {
 		this.game.load.image('L1', 'as/img/L1.png');
 		this.game.load.image('L2', 'as/img/L2.png');
 		this.game.load.image('L3', 'as/img/L3.png');
-		this.game.load.image('player1', 'as/img/player.png');
+		this.game.load.image('background', 'as/img/background2.png');
+		this.game.load.spritesheet('player1', 'as/img/player1.png', 32,32);
+		this.game.load.spritesheet('barrel', 'as/img/barrel.png', 32,32);
 		this.game.load.image('powder', 'as/img/powder.png');
+		this.game.load.image('nail', 'as/img/nails.png');
 		this.game.load.image('food', 'as/img/food.png');
 		this.game.load.image('lifeC', 'as/img/lifeC.png');
+		this.game.load.image('ammoC', 'as/img/ammoC.png');
 		this.game.load.image('blank', 'as/img/blank.png');
 		this.game.load.image('enemyS', 'as/img/enemyS.png');
 		this.game.load.image('enemyL', 'as/img/enemyL.png');
-		this.game.load.image('enemyI', 'as/img/enemyI.png');
+		this.game.load.spritesheet('enemyI', 'as/img/enemyI.png', 32, 32);
 		this.game.load.image('bullet', 'as/img/bullet.png');
 
 		this.game.load.tilemap('lvl1','as/maps/level1.json', null, Phaser.Tilemap.TILED_JSON);

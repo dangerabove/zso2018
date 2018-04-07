@@ -68,14 +68,10 @@ var levelState = {
 		lifeC.fixedToCamera = true;
 		ammoC = this.add.text(lifeC.x, lifeC.y+43, 'x' + ammo, {font:'38px',fill: '#ffffff'});
 		ammoC.fixedToCamera = true;
-		ropeC = this.add.text(lifeC.x, ammoC.y+43, 'x' + rope, {font:'38px',fill: '#ffffff'});
-		ropeC.fixedToCamera = true;
 		lifeI = this.add.sprite(5, 5, 'lifeC');
 		lifeI.fixedToCamera = true;
 		ammoI = this.add.sprite(lifeI.x, lifeI.y+43, 'ammoC');
 		ammoI.fixedToCamera = true;
-		ropeI = this.add.sprite(lifeI.x, ammoI.y+43, 'ropeC');
-		ropeI.fixedToCamera = true;
 
 		enemySG.fireRateS = 100;
 		enemySG.nextFireS = 0;

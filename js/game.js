@@ -10,10 +10,11 @@ var invRate = 150;
 var nextInvul = 0;
 var powderG;
 var foodG;
+var barrelEG;
+var barrelG;
 var life = 8;
 var maxlife = 8;
 var ammo = 3;
-var rope = 3;
 var start;
 
 var enemySG;
@@ -24,10 +25,15 @@ var bulletS;
 
 var lifeC;
 var ammoC;
-var ropeC;
 var lifeI;
 var ammoI;
-var ropeI;
+
+var animL;
+var animR;
+var animT;
+var animB;
+var hitEG;
+var hitG;
 
 game.state.add('init', initState);
 game.state.add('load', loadState);
