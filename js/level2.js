@@ -372,7 +372,7 @@ var levelState = {
 	hitG4: function(slash4, barrelG){barrelG.play('die', 3, false); barrelG.body.checkCollision.none = true},
 	hitG5: function(bulletP, barrelG){barrelG.play('die', 3, false); bulletP.kill(); barrelG.body.checkCollision.none = true},
 	render: function(){
-		game.debug.body(player);
+		//game.debug.body(player);
 		/*game.debug.body(slash1);
 		game.debug.body(slash2);
 		game.debug.body(slash3);
